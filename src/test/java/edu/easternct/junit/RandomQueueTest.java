@@ -41,11 +41,11 @@ public class RandomQueueTest {
 
 			int val = rqueue.dequeue();
 			assertThat(val, isIn(testValues));
-			System.out.printf("%d ",val);
+//			System.out.printf("%d ",val);
 		}
 
 		assertThat(rqueue.isEmpty(), is(true));
-		System.out.println();
+//		System.out.println();
 	}
 
 	@Test
@@ -56,9 +56,9 @@ public class RandomQueueTest {
 		for (Integer val : rqueue) {
 
 			assertThat(val, both(greaterThan(0)).and(lessThan(10)));
-			System.out.printf("%d ",val);
+//			System.out.printf("%d ",val);
 		}
-		System.out.println();
+//		System.out.println();
 	}
 
 	@Test(expected= IllegalStateException.class)
@@ -67,5 +67,22 @@ public class RandomQueueTest {
 		RandomQueue<Integer> rqueue = new RandomQueue<Integer>();
 
 		rqueue.peek();
+	}
+
+	@Test
+	public void testRandom() {
+
+		int ones = 0;
+		for (int i=0; i<1000; ++i) {
+			RandomQueue<Integer> rqueue = new RandomQueue<Integer>();
+			rqueue.enqueue(1);
+			rqueue.enqueue(2);
+			if (rqueue.dequeue() == 1) {
+				
+				++ones;
+			}
+		}
+//		System.out.println(ones);
+		assertThat(ones, is(both(lessThan(550)).and(greaterThan(450))));
 	}
 }
